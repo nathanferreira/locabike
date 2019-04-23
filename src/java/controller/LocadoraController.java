@@ -1,7 +1,7 @@
 package controller;
 
-import model.Cliente;
-import dao.ClienteDAO;
+import model.Locadora;
+import dao.LocadoraDAO;
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,14 +10,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = "/cliente/*")
-public class ClienteController extends HttpServlet {
+@WebServlet(urlPatterns = "/locadora/*")
+public class LocadoraController extends HttpServlet {
 
-    private ClienteDAO dao;
+    private LocadoraDAO dao;
 
     @Override
     public void init() {
-        dao = new ClienteDAO();
+        dao = new LocadoraDAO();
     }
 
     @Override
@@ -29,7 +29,6 @@ public class ClienteController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
-
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/"));
         try {
@@ -47,7 +46,7 @@ public class ClienteController extends HttpServlet {
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/novoCliente.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/novaLocadora.jsp");
         dispatcher.forward(request, response);
     }
 
