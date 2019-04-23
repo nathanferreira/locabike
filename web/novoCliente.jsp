@@ -9,9 +9,9 @@
     <center>
         <h1>Gerenciamento de Clientes</h1>
         <h2>
-            <a href="new">Adicione Novo Cliente</a>
+            <a href="/cliente/cadastro">Adicione Novo Cliente</a>
             &nbsp;&nbsp;&nbsp;
-            <a href="lista">Lista de Clientes</a>
+            <a href="/cliente/lista">Lista de Clientes</a>
         </h2>
     </center>
     <div align="center">
@@ -47,6 +47,13 @@
                         <td>
                             <input type="text" name="password" size="45"
                                    value="<c:out value='${cliente.password}' />"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>CPF: </th>
+                        <td>
+                            <input type="text" name="CPF" size="45"
+                                   value="<c:out value='${cliente.CPF}' />"/>
                         </td>
                     </tr>
                     <tr>

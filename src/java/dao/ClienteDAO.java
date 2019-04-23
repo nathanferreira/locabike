@@ -6,6 +6,9 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ClienteDAO {
     public ClienteDAO() {
@@ -21,7 +24,7 @@ public class ClienteDAO {
     }
     
     public void insert(Cliente cliente) {
-        String sql = "INSERT INTO Livro (email, password, CPF, name, gender, phone, birthDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Cliente (email, password, CPF, name, gender, phone, birthDate) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -41,12 +44,12 @@ public class ClienteDAO {
         }
     }
     
-    public void delete(Cliente cliente) {
+    public void delete(String CPF) {
         String sql = "DELETE FROM Cliente where CPF = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, cliente.getCPF());
+            statement.setString(1, CPF);
             statement.executeUpdate();
             statement.close();
             conn.close();
@@ -101,5 +104,34 @@ public class ClienteDAO {
             throw new RuntimeException(e);
         }
         return cliente;
+    }
+    
+    public List<Cliente> getAll() {
+        List<Cliente> listaClientes = new ArrayList<>();
+        String sql = "SELECT * FROM Cliente";
+        try {
+            Connection conn = this.getConnection();
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String CPF = resultSet.getString("CPF");
+                String name = resultSet.getString("name");
+                String gender = resultSet.getString("gender");
+                String phone = resultSet.getString("phone");
+                String birthDate = resultSet.getString("birthDate");
+        
+                Cliente cliente = new Cliente(email, password, CPF, name, gender, phone, birthDate);
+                listaClientes.add(cliente);
+            }
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaClientes;
     }
 }
