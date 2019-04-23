@@ -28,7 +28,6 @@ public class ClienteDAO {
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement = conn.prepareStatement(sql);
             statement.setString(1, cliente.getEmail());
             statement.setString(2, cliente.getPassword());
             statement.setString(3, cliente.getCPF());
@@ -59,8 +58,7 @@ public class ClienteDAO {
     }
     
     public void update(Cliente cliente) {
-        String sql = "UPDATE Cliente SET email = ?, password = ?, CPF = ?, name = ?, gender = ?, phone = ?, birthDate = ?";
-        sql += " WHERE CPF = ?";
+        String sql = "UPDATE Cliente SET email = ?, password = ?, CPF = ?, name = ?, gender = ?, phone = ?, birthDate = ? WHERE CPF = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -71,6 +69,8 @@ public class ClienteDAO {
             statement.setString(5, cliente.getGender());
             statement.setString(6, cliente.getPhone());
             statement.setString(7, cliente.getBirthDate());
+            statement.setString(8, cliente.getCPF());
+            
             statement.executeUpdate();
             statement.close();
             conn.close();
@@ -94,7 +94,7 @@ public class ClienteDAO {
                 String gender = resultSet.getString("gender");
                 String phone = resultSet.getString("phone");
                 String birthDate = resultSet.getString("birthDate");
-                cliente = new Cliente(CPF, email, password, name, gender, phone,
+                cliente = new Cliente(email, password, CPF, name, gender, phone,
                     birthDate);
             }
             resultSet.close();

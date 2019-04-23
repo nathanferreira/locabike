@@ -12,6 +12,10 @@
             <a href="/cliente/cadastro">Adicione Novo Cliente</a>
             &nbsp;&nbsp;&nbsp;
             <a href="/cliente/lista">Lista de Clientes</a>
+            
+             <a href="/cliente/cadastro">Adicione Novo Cliente</a>
+            &nbsp;&nbsp;&nbsp;
+            <a href="/cliente/lista">Lista de Clientes</a>
         </h2>
     </center>
     <div align="center">
@@ -21,10 +25,10 @@
                 <th>CPF</th>
                 <th>Nome</th>
                 <th>Email</th>
-                <th>Phone</th>
-                <th>Gender</th>
-                <th>Password</th>
-                <th>Birthdate</th>
+                <th>Telefone</th>
+                <th>Genero</th>
+                <th>Senha</th>
+                <th>Data de Nascimento</th>
                 <th>Ações</th>
             </tr>
             <c:forEach var="cliente" items="${listaClientes}">

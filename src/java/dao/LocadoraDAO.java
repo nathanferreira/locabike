@@ -6,6 +6,10 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import model.Locadora;
 
 public class LocadoraDAO {
 
@@ -22,7 +26,7 @@ public class LocadoraDAO {
     }
 
     public void insert(Locadora locadora) {
-        String sql = "INSERT INTO Livro (email, password, CNPJ, name, city) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Locadora (email, password, CNPJ, name, city) VALUES (?, ?, ?, ?, ?)";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -40,12 +44,12 @@ public class LocadoraDAO {
         }
     }
 
-    public void delete(Locadora locadora) {
+    public void delete(String CNPJ) {
         String sql = "DELETE FROM Locadora where CNPJ = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, locadora.getCNPJ());
+            statement.setString(1, CNPJ);
             statement.executeUpdate();
             statement.close();
             conn.close();
@@ -55,7 +59,7 @@ public class LocadoraDAO {
     }
 
     public void update(Locadora locadora) {
-        String sql = "UPDATE Locadora SET email = ?, password = ?, CNPJ = ?, name = ?, city = ?, phone = ?, birthDate = ?";
+        String sql = "UPDATE Locadora SET email = ?, password = ?, CNPJ = ?, name = ?, city = ?";
         sql += " WHERE CNPJ = ?";
         try {
             Connection conn = this.getConnection();
@@ -65,6 +69,8 @@ public class LocadoraDAO {
             statement.setString(3, locadora.getCNPJ());
             statement.setString(4, locadora.getName());
             statement.setString(5, locadora.getCity());
+            statement.setString(6, locadora.getCNPJ());
+
             statement.executeUpdate();
             statement.close();
             conn.close();
@@ -86,7 +92,7 @@ public class LocadoraDAO {
                 String password = resultSet.getString("password");
                 String name = resultSet.getString("name");
                 String city = resultSet.getString("city");
-                locadora = new Locadora(CNPJ, email, password, name, city);
+                locadora = new Locadora(email, password, CNPJ, name, city);
             }
             resultSet.close();
             statement.close();
@@ -95,5 +101,32 @@ public class LocadoraDAO {
             throw new RuntimeException(e);
         }
         return locadora;
+    }
+    
+    public List<Locadora> getAll() {
+        List<Locadora> listaLocadoras = new ArrayList<>();
+        String sql = "SELECT * FROM Locadora";
+        try {
+            Connection conn = this.getConnection();
+            Statement statement = conn.createStatement();
+            ResultSet resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                
+                String email = resultSet.getString("email");
+                String password = resultSet.getString("password");
+                String CNPJ = resultSet.getString("CNPJ");
+                String name = resultSet.getString("name");
+                String city = resultSet.getString("city");
+        
+                Locadora locadora = new Locadora(email, password, CNPJ, name, city);
+                listaLocadoras.add(locadora);
+            }
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaLocadoras;
     }
 }
