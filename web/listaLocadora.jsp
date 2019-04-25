@@ -6,14 +6,7 @@
         <title>Lokabike | Lista Locadoras</title>
     </head>
     <body>
-    <center>
-        <h1>Gerenciamento de Locadoras</h1>
-        <h2>
-            <a href="/locadora/cadastro">Adicione Nova Locadora</a>
-            &nbsp;&nbsp;&nbsp;
-            <a href="/locadora/lista">Lista de Locadoras</a>
-        </h2>
-    </center>
+    <%@include  file="menu.html" %>
     <div align="center">
         <table border="1" cellpadding="5">
             <caption><h2>Lista de Locadora</h2></caption>

@@ -6,14 +6,8 @@
         <title>LOCABIKE</title>
     </head>
     <body>
-    <center>
-        <h1>Gerenciamento de Clientes</h1>
-        <h2>
-            <a href="/cliente/cadastro">Adicione Novo Cliente</a>
-            &nbsp;&nbsp;&nbsp;
-            <a href="/cliente/lista">Lista de Clientes</a>
-        </h2>
-    </center>
+    <%@include  file="menu.html" %>
+    
     <div align="center">
         <c:if test="${cliente != null}">
             <form action="atualizacao" method="post">

@@ -6,18 +6,7 @@
         <title>Lokabike | Lista Clientes</title>
     </head>
     <body>
-    <center>
-        <h1>Gerenciamento de Clientes</h1>
-        <h2>
-            <a href="/cliente/cadastro">Adicione Novo Cliente</a>
-            &nbsp;&nbsp;&nbsp;
-            <a href="/cliente/lista">Lista de Clientes</a>
-            
-             <a href="/cliente/cadastro">Adicione Novo Cliente</a>
-            &nbsp;&nbsp;&nbsp;
-            <a href="/cliente/lista">Lista de Clientes</a>
-        </h2>
-    </center>
+    <%@include  file="menu.html" %>
     <div align="center">
         <table border="1" cellpadding="5">
             <caption><h2>Lista de Cliente</h2></caption>

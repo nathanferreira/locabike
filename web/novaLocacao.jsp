@@ -6,66 +6,51 @@
         <title>LOCABIKE</title>
     </head>
     <body>
-    
+        
     <%@include  file="menu.html" %>
     
     <div align="center">
-        <c:if test="${locadora != null}">
+        <c:if test="${locacao != null}">
             <form action="atualizacao" method="post">
             </c:if>
-            <c:if test="${locadora == null}">
+            <c:if test="${locacao == null}">
                 <form action="insercao" method="post">
                 </c:if>
                 <table border="1" cellpadding="5">
                     <caption>
                         <h2>
-                            <c:if test="${locadora != null}">
+                            <c:if test="${locacao != null}">
                                 Edição
                             </c:if>
-                            <c:if test="${locadora == null}">
+                            <c:if test="${locacao == null}">
                                 Cadastro
                             </c:if>
                         </h2>
                     </caption>
-                    <c:if test="${locadora != null}">
-                        <input type="hidden" name="CNPJ" value="<c:out value='${locadora.CNPJ}' />" />
+                    <c:if test="${locacao != null}">
+                        <input type="hidden" name="ID" value="<c:out value='${locacao.ID}' />" />
                     </c:if>
-                    <c:if test="${locadora == null}">
+                    <c:if test="${locacao == null}">
                     <tr>
                         <th>CNPJ: </th>
                         <td>
                             <input type="text" name="CNPJ" size="45"
-                                   value="<c:out value='${locadora.CNPJ}' />"/>
+                                   value="<c:out value='${locacao.CNPJ}' />"/>
                         </td>
                     </tr>
                     </c:if>
                     <tr>
-                        <th>Email: </th>
+                        <th>CPF: </th>
                         <td>
-                            <input type="text" name="email" size="45"
-                                   value="<c:out value='${locadora.email}' />"/>
+                            <input type="text" name="CPF" size="45"
+                                   value="<c:out value='${locacao.CPF}' />"/>
                         </td>
                     </tr>
                     <tr>
-                        <th>Senha: </th>
+                        <th>Data de Aluguel: </th>
                         <td>
-                            <input type="text" name="password" size="45"
-                                   value="<c:out value='${locadora.password}' />"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Cidade: </th>
-                        <td>
-                            <input type="text" name="city" size="5"
-                                   value="<c:out value='${locadora.city}' />"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Nome: </th>
-                        <td>
-                            <input type="text" name="name" size="5"
-                                   value="<c:out value='${locadora.name}' />"
-                                   />
+                            <input type="text" name="rentDate" size="45"
+                                   value="<c:out value='${locacao.rentDate}' />"/>
                         </td>
                     </tr>
                     <tr>
