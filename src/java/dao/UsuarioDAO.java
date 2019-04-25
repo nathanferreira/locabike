@@ -1,6 +1,6 @@
 package dao;
 
-import model.Locadora;
+import model.Usuario;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -9,33 +9,28 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import model.Locadora;
 
-public class LocadoraDAO {
-
-    public LocadoraDAO() {
+public class UsuarioDAO {
+    public UsuarioDAO() {
         try {
             Class.forName("org.apache.derby.jdbc.ClientDriver");
-        } catch (ClassNotFoundException e) {
+        } catch(ClassNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
-
+    
     protected Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:derby://localhost:1527/Locabike", "root", "root");
     }
-
-    public void insert(Locadora locadora) {
-        String sql = "INSERT INTO Locadora (email, password, CNPJ, name, city) VALUES (?, ?, ?, ?, ?)";
+    
+    public void insert(Usuario usuario) {
+        String sql = "INSERT INTO Usuario (email, password, role) VALUES (?, ?, ?)";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement = conn.prepareStatement(sql);
-            statement.setString(1, locadora.getEmail());
-            statement.setString(2, locadora.getPassword());
-            statement.setString(3, locadora.getCNPJ());
-            statement.setString(4, locadora.getName());
-            statement.setString(5, locadora.getCity());
+            statement.setString(1, usuario.getEmail());
+            statement.setString(2, usuario.getPassword());
+            statement.setString(3, usuario.getRole());
             statement.executeUpdate();
             statement.close();
             conn.close();
@@ -43,9 +38,9 @@ public class LocadoraDAO {
             throw new RuntimeException(e);
         }
     }
-
+    
     public void delete(String email) {
-        String sql = "DELETE FROM Locadora where email = ?";
+        String sql = "DELETE FROM Usuario WHERE email = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -57,20 +52,16 @@ public class LocadoraDAO {
             throw new RuntimeException(e);
         }
     }
-
-    public void update(Locadora locadora) {
-        String sql = "UPDATE Locadora SET email = ?, password = ?, CNPJ = ?, name = ?, city = ?";
-        sql += " WHERE email = ?";
+    
+    public void update(Usuario usuario) {
+        String sql = "UPDATE Usuario SET email = ?, password = ?, role = ? WHERE email = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, locadora.getEmail());
-            statement.setString(2, locadora.getPassword());
-            statement.setString(3, locadora.getCNPJ());
-            statement.setString(4, locadora.getName());
-            statement.setString(5, locadora.getCity());
-            statement.setString(6, locadora.getEmail());
-
+            statement.setString(1, usuario.getEmail());
+            statement.setString(2, usuario.getPassword());
+            statement.setString(3, usuario.getRole());
+            statement.setString(4, usuario.getEmail());
             statement.executeUpdate();
             statement.close();
             conn.close();
@@ -78,21 +69,19 @@ public class LocadoraDAO {
             throw new RuntimeException(e);
         }
     }
-
-    public Locadora get(String email) {
-        Locadora locadora = null;
-        String sql = "SELECT * FROM Locadora WHERE email = ?";
+    
+    public Usuario get(String email) {
+        Usuario usuario = null;
+        String sql = "SELECT * FROM Usuario WHERE email = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
             statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String CNPJ = resultSet.getString("CNPJ");
                 String password = resultSet.getString("password");
-                String name = resultSet.getString("name");
-                String city = resultSet.getString("city");
-                locadora = new Locadora(email, password, CNPJ, name, city);
+                String role = resultSet.getString("role");
+                usuario = new Usuario(email, password, role);
             }
             resultSet.close();
             statement.close();
@@ -100,12 +89,12 @@ public class LocadoraDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return locadora;
+        return usuario;
     }
     
-    public List<Locadora> getAll() {
-        List<Locadora> listaLocadoras = new ArrayList<>();
-        String sql = "SELECT * FROM Locadora";
+    public List<Usuario> getAll() {
+        List<Usuario> listaUsuarios = new ArrayList<>();
+        String sql = "SELECT * FROM Usuario";
         try {
             Connection conn = this.getConnection();
             Statement statement = conn.createStatement();
@@ -114,12 +103,10 @@ public class LocadoraDAO {
                 
                 String email = resultSet.getString("email");
                 String password = resultSet.getString("password");
-                String CNPJ = resultSet.getString("CNPJ");
-                String name = resultSet.getString("name");
-                String city = resultSet.getString("city");
+                String role = resultSet.getString("role");
         
-                Locadora locadora = new Locadora(email, password, CNPJ, name, city);
-                listaLocadoras.add(locadora);
+                Usuario usuario = new Usuario(email, password, role);
+                listaUsuarios.add(usuario);
             }
             resultSet.close();
             statement.close();
@@ -127,6 +114,6 @@ public class LocadoraDAO {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return listaLocadoras;
+        return listaUsuarios;
     }
 }

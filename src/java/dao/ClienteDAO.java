@@ -43,12 +43,12 @@ public class ClienteDAO {
         }
     }
     
-    public void delete(String CPF) {
-        String sql = "DELETE FROM Cliente where CPF = ?";
+    public void delete(String email) {
+        String sql = "DELETE FROM Cliente where email = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, CPF);
+            statement.setString(1, email);
             statement.executeUpdate();
             statement.close();
             conn.close();
@@ -58,7 +58,7 @@ public class ClienteDAO {
     }
     
     public void update(Cliente cliente) {
-        String sql = "UPDATE Cliente SET email = ?, password = ?, CPF = ?, name = ?, gender = ?, phone = ?, birthDate = ? WHERE CPF = ?";
+        String sql = "UPDATE Cliente SET email = ?, password = ?, CPF = ?, name = ?, gender = ?, phone = ?, birthDate = ? WHERE email = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
@@ -79,16 +79,16 @@ public class ClienteDAO {
         }
     }
     
-    public Cliente get(String CPF) {
+    public Cliente get(String email) {
         Cliente cliente = null;
-        String sql = "SELECT * FROM Cliente WHERE CPF = ?";
+        String sql = "SELECT * FROM Cliente WHERE email = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-            statement.setString(1, CPF);
+            statement.setString(1, email);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
-                String email = resultSet.getString("email");
+                String CPF = resultSet.getString("CPF");
                 String password = resultSet.getString("password");
                 String name = resultSet.getString("name");
                 String gender = resultSet.getString("gender");

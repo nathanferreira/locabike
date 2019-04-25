@@ -117,6 +117,4 @@ public class LocacaoController extends HttpServlet {
         dao.delete(ID);
         response.sendRedirect("lista");
     }
-
-
 }

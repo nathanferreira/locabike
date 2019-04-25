@@ -31,9 +31,9 @@
                     <td><c:out value="${cliente.birthDate}" /></td>
 
                     <td>
-                        <a href="edicao?CPF=<c:out value='${cliente.CPF}' />">Edição</a>
+                        <a href="edicao?email=<c:out value='${cliente.CPF}' />">Edição</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="remocao?CPF=<c:out value='${cliente.CPF}' />"
+                        <a href="remocao?email=<c:out value='${cliente.CPF}' />"
                            onclick="return confirm('Tem certeza de que deseja excluir este item?');">
                             Remoção
                         </a>

@@ -62,7 +62,7 @@ public class LocacaoDAO {
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);
-            
+
             statement.setString(2, locacao.getCPF());
             statement.setString(3, locacao.getRentDate());
             statement.setString(1, locacao.getCNPJ());
@@ -98,7 +98,7 @@ public class LocacaoDAO {
         }
         return locacao;
     }
-    
+
     public List<Locacao> getAll() {
         List<Locacao> listaLocacaos = new ArrayList<>();
         String sql = "SELECT * FROM Locacao";
@@ -107,12 +107,12 @@ public class LocacaoDAO {
             Statement statement = conn.createStatement();
             ResultSet resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
-                
+
                 String ID = resultSet.getString("ID");
                 String CNPJ = resultSet.getString("CNPJ");
                 String CPF = resultSet.getString("CPF");
                 String rentDate = resultSet.getString("rentDate");
-        
+
                 Locacao locacao = new Locacao(ID, CNPJ, CPF, rentDate);
                 listaLocacaos.add(locacao);
             }

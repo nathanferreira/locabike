@@ -1,7 +1,9 @@
 package controller;
 
 import model.Cliente;
+import model.Usuario;
 import dao.ClienteDAO;
+import dao.UsuarioDAO;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -14,11 +16,14 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = "/cliente/*")
 public class ClienteController extends HttpServlet {
 
+    String role = "cliente";
     private ClienteDAO dao;
+    private UsuarioDAO userDao;
 
     @Override
     public void init() {
         dao = new ClienteDAO();
+        userDao = new UsuarioDAO();
     }
 
     @Override
@@ -67,16 +72,16 @@ public class ClienteController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/novoCliente.jsp");
         dispatcher.forward(request, response);
     }
-    
+
     private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String CPF = request.getParameter("CPF");
-        Cliente cliente = dao.get(CPF);
+        String email = request.getParameter("email");
+        Cliente cliente = dao.get(email);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/novoCliente.jsp");
         request.setAttribute("cliente", cliente);
         dispatcher.forward(request, response);
     }
-    
+
     private void lista(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         List<Cliente> listaClientes = dao.getAll();
@@ -84,10 +89,10 @@ public class ClienteController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/listaCliente.jsp");
         dispatcher.forward(request, response);
     }
-    
+
     private void insere(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
-          
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String CPF = request.getParameter("CPF");
@@ -95,16 +100,18 @@ public class ClienteController extends HttpServlet {
         String gender = request.getParameter("gender");
         String phone = request.getParameter("phone");
         String birthDate = request.getParameter("birthDate");
-        
+
         Cliente cliente = new Cliente(email, password, CPF, name, gender, phone, birthDate);
+        Usuario usuario = new Usuario(email, password, role);
         dao.insert(cliente);
+        userDao.insert(usuario);
         response.sendRedirect("lista");
     }
-    
+
     private void atualize(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         request.setCharacterEncoding("UTF-8");
-        
+
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String CPF = request.getParameter("CPF");
@@ -112,16 +119,19 @@ public class ClienteController extends HttpServlet {
         String gender = request.getParameter("gender");
         String phone = request.getParameter("phone");
         String birthDate = request.getParameter("birthDate");
-        
+
         Cliente cliente = new Cliente(email, password, CPF, name, gender, phone, birthDate);
+        Usuario usuario = new Usuario(email, password, role);
         dao.update(cliente);
+        userDao.update(usuario);
         response.sendRedirect("lista");
     }
 
     private void remove(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
-        String CPF = request.getParameter("CPF");
-        dao.delete(CPF);
+        String email = request.getParameter("email");
+        dao.delete(email);
+        userDao.delete(email);
         response.sendRedirect("lista");
     }
 

@@ -3,33 +3,28 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
-        <title>Lokabike | Lista Locadoras</title>
+        <title>Lokabike | Lista de Usuarios</title>
     </head>
     <body>
     <%@include  file="menu.html" %>
     <div align="center">
         <table border="1" cellpadding="5">
-            <caption><h2>Lista de Locadora</h2></caption>
+            <caption><h2>Lista de Usuarios</h2></caption>
             <tr>
-                <th>CNPJ</th>
-                <th>Nome</th>
                 <th>Email</th>
-                <th>Cidade</th>
                 <th>Senha</th>
+                <th>Papel</th>
                 <th>Ações</th>
             </tr>
-            <c:forEach var="locadora" items="${listaLocadoras}">
+            <c:forEach var="usuario" items="${listaUsuarios}">
                 <tr>
-                    <td><c:out value="${locadora.CNPJ}" /></td>
-                    <td><c:out value="${locadora.name}" /></td>
-                    <td><c:out value="${locadora.email}" /></td>
-                    <td><c:out value="${locadora.city}" /></td>
-                    <td><c:out value="${locadora.password}" /></td>
-
+                    <td><c:out value="${usuario.email}" /></td>
+                    <td><c:out value="${usuario.password}" /></td>
+                    <td><c:out value="${usuario.role}" /></td>
                     <td>
-                        <a href="/locadora/edicao?email=<c:out value='${locadora.email}' />">Edição</a>
+                        <a href="/<c:out value='${usuario.role}'/>/edicao?email=<c:out value='${usuario.email}' />">Edição</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="/locadora/remocao?email=<c:out value='${locadora.email}' />"
+                        <a href="/<c:out value='${usuario.role}'/>/remocao?email=<c:out value='${usuario.email}' />"
                            onclick="return confirm('Tem certeza de que deseja excluir este item?');">
                             Remoção
                         </a>

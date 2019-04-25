@@ -10,45 +10,40 @@
     <%@include  file="menu.html" %>
     
     <div align="center">
-        <c:if test="${locacao != null}">
+        <c:if test="${usuario != null}">
             <form action="atualizacao" method="post">
             </c:if>
-            <c:if test="${locacao == null}">
+            <c:if test="${usuario == null}">
                 <form action="insercao" method="post">
                 </c:if>
                 <table border="1" cellpadding="5">
                     <caption>
                         <h2>
-                            <c:if test="${locacao != null}">
+                            <c:if test="${usuario != null}">
                                 Edição
                             </c:if>
-                            <c:if test="${locacao == null}">
+                            <c:if test="${usuario == null}">
                                 Cadastro
                             </c:if>
                         </h2>
                     </caption>
-                    <c:if test="${locacao != null}">
-                        <input type="hidden" name="ID" value="<c:out value='${locacao.ID}' />" />
+                    <c:if test="${usuario != null}">
+                        <input type="hidden" name="email" value="<c:out value='${usuario.email}' />" />
+                    </c:if>
+                    <c:if test="${usuario == null}">
+                    <tr>
+                        <th>Email: </th>
+                        <td>
+                            <input type="text" name="email" size="45"
+                                   value="<c:out value='${usuario.email}' />"/>
+                        </td>
+                    </tr>
                     </c:if>
                     <tr>
-                        <th>CNPJ: </th>
+                        <th>Senha: </th>
                         <td>
-                            <input type="text" name="CNPJ" size="45"
-                                   value="<c:out value='${locacao.CNPJ}' />"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>CPF: </th>
-                        <td>
-                            <input type="text" name="CPF" size="45"
-                                   value="<c:out value='${locacao.CPF}' />"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>Data de Aluguel: </th>
-                        <td>
-                            <input type="text" name="rentDate" size="45"
-                                   value="<c:out value='${locacao.rentDate}' />"/>
+                            <input type="text" name="password" size="45"
+                                   value="<c:out value='${usuario.password}' />"/>
                         </td>
                     </tr>
                     <tr>

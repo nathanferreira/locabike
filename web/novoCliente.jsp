@@ -26,9 +26,7 @@
                             </c:if>
                         </h2>
                     </caption>
-                    <c:if test="${cliente != null}">
-                        <input type="hidden" name="CPF" value="<c:out value='${cliente.CPF}' />" />
-                    </c:if>
+
                     <tr>
                         <th>Email: </th>
                         <td>

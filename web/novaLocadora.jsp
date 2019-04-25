@@ -27,10 +27,7 @@
                             </c:if>
                         </h2>
                     </caption>
-                    <c:if test="${locadora != null}">
-                        <input type="hidden" name="CNPJ" value="<c:out value='${locadora.CNPJ}' />" />
-                    </c:if>
-                    <c:if test="${locadora == null}">
+
                     <tr>
                         <th>CNPJ: </th>
                         <td>
@@ -38,7 +35,6 @@
                                    value="<c:out value='${locadora.CNPJ}' />"/>
                         </td>
                     </tr>
-                    </c:if>
                     <tr>
                         <th>Email: </th>
                         <td>

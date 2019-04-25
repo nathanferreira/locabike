@@ -1,8 +1,6 @@
 package controller;
 
-import model.Locadora;
 import model.Usuario;
-import dao.LocadoraDAO;
 import dao.UsuarioDAO;
 import java.io.IOException;
 import java.util.List;
@@ -13,17 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = "/locadora/*")
-public class LocadoraController extends HttpServlet {
+@WebServlet(urlPatterns = "/usuario/*")
+public class UsuarioController extends HttpServlet {
 
-    String role = "locadora";
-    private LocadoraDAO dao;
-    private UsuarioDAO userDao;
+    private UsuarioDAO dao;
 
     @Override
     public void init() {
-        dao = new LocadoraDAO();
-        userDao = new UsuarioDAO();
+        dao = new UsuarioDAO();
     }
 
     @Override
@@ -35,6 +30,7 @@ public class LocadoraController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
+
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/"));
         try {
@@ -68,57 +64,49 @@ public class LocadoraController extends HttpServlet {
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/novaLocadora.jsp");
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/novoUsuario.jsp");
         dispatcher.forward(request, response);
     }
-
+    
     private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String email = request.getParameter("email");
-        Locadora locadora = dao.get(email);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/novaLocadora.jsp");
-        request.setAttribute("locadora", locadora);
+        Usuario usuario = dao.get(email);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/novoUsuario.jsp");
+        request.setAttribute("usuario", usuario);
         dispatcher.forward(request, response);
     }
-
+    
     private void lista(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        List<Locadora> listaLocadoras = dao.getAll();
-        request.setAttribute("listaLocadoras", listaLocadoras);
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/listaLocadora.jsp");
+        List<Usuario> listaUsuarios = dao.getAll();
+        request.setAttribute("listaUsuarios", listaUsuarios);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/listaUsuario.jsp");
         dispatcher.forward(request, response);
     }
-
+    
     private void insere(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
-
+          
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String CNPJ = request.getParameter("CNPJ");
-        String name = request.getParameter("name");
-        String city = request.getParameter("city");
-
-        Locadora locadora = new Locadora(email, password, CNPJ, name, city);
+        String role = "admin";
+        
         Usuario usuario = new Usuario(email, password, role);
-        dao.insert(locadora);
-        userDao.insert(usuario);
+        dao.insert(usuario);
         response.sendRedirect("lista");
     }
-
+    
     private void atualize(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         request.setCharacterEncoding("UTF-8");
-
+        
         String email = request.getParameter("email");
         String password = request.getParameter("password");
-        String CNPJ = request.getParameter("CNPJ");
-        String name = request.getParameter("name");
-        String city = request.getParameter("city");
-
-        Locadora locadora = new Locadora(email, password, CNPJ, name, city);
+        String role = request.getParameter("role");
+        
         Usuario usuario = new Usuario(email, password, role);
-        dao.update(locadora);
-        userDao.update(usuario);
+        dao.update(usuario);
         response.sendRedirect("lista");
     }
 
@@ -126,7 +114,7 @@ public class LocadoraController extends HttpServlet {
             throws IOException {
         String email = request.getParameter("email");
         dao.delete(email);
-        userDao.delete(email);
         response.sendRedirect("lista");
     }
+
 }
