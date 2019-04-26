@@ -6,9 +6,9 @@
         <title>LOCABIKE</title>
     </head>
     <body>
-    <%@include  file="menu.html" %>
+    <%@include  file="menu.jsp" %>
     
-    <div align="center">
+    <div class="content">
         <c:if test="${cliente != null}">
             <form action="atualizacao" method="post">
             </c:if>

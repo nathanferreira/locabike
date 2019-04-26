@@ -69,7 +69,7 @@ public class ClienteDAO {
             statement.setString(5, cliente.getGender());
             statement.setString(6, cliente.getPhone());
             statement.setString(7, cliente.getBirthDate());
-            statement.setString(8, cliente.getCPF());
+            statement.setString(8, cliente.getEmail());
             
             statement.executeUpdate();
             statement.close();
@@ -81,7 +81,7 @@ public class ClienteDAO {
     
     public Cliente get(String email) {
         Cliente cliente = null;
-        String sql = "SELECT * FROM Cliente WHERE email = ?";
+        String sql = "SELECT * FROM CLIENTE WHERE email = ?";
         try {
             Connection conn = this.getConnection();
             PreparedStatement statement = conn.prepareStatement(sql);

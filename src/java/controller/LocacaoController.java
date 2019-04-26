@@ -70,8 +70,8 @@ public class LocacaoController extends HttpServlet {
     
     private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String CNPJ = request.getParameter("CNPJ");
-        Locacao locacao = dao.get(CNPJ);
+        String ID = request.getParameter("ID");
+        Locacao locacao = dao.get(ID);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/novaLocacao.jsp");
         request.setAttribute("locacao", locacao);
         dispatcher.forward(request, response);

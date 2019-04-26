@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = "/usuario/*")
+@WebServlet(urlPatterns = "/admin/*")
 public class UsuarioController extends HttpServlet {
 
     private UsuarioDAO dao;

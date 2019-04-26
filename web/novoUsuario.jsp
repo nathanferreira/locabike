@@ -7,9 +7,9 @@
     </head>
     <body>
         
-    <%@include  file="menu.html" %>
+    <%@include  file="menu.jsp" %>
     
-    <div align="center">
+    <div class="content">
         <c:if test="${usuario != null}">
             <form action="atualizacao" method="post">
             </c:if>
@@ -27,10 +27,7 @@
                             </c:if>
                         </h2>
                     </caption>
-                    <c:if test="${usuario != null}">
-                        <input type="hidden" name="email" value="<c:out value='${usuario.email}' />" />
-                    </c:if>
-                    <c:if test="${usuario == null}">
+
                     <tr>
                         <th>Email: </th>
                         <td>
@@ -38,7 +35,6 @@
                                    value="<c:out value='${usuario.email}' />"/>
                         </td>
                     </tr>
-                    </c:if>
                     <tr>
                         <th>Senha: </th>
                         <td>

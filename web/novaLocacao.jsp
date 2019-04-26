@@ -7,9 +7,9 @@
     </head>
     <body>
         
-    <%@include  file="menu.html" %>
+    <%@include  file="menu.jsp" %>
     
-    <div align="center">
+    <div class="content">
         <c:if test="${locacao != null}">
             <form action="atualizacao" method="post">
             </c:if>

@@ -6,8 +6,9 @@
         <title>Lokabike | Lista de Usuarios</title>
     </head>
     <body>
-    <%@include  file="menu.html" %>
-    <div align="center">
+    <%@include  file="menu.jsp" %>
+    
+    <div class="content">
         <table border="1" cellpadding="5">
             <caption><h2>Lista de Usuarios</h2></caption>
             <tr>

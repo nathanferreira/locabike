@@ -35,27 +35,55 @@ public class LocadoraController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
+        
+        String sessionRole = "";
+        
+        if(request.getSession().equals(true)){
+            sessionRole = request.getSession().getAttribute("role").toString();
+        }
+        
+        
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/"));
         try {
             switch (action) {
                 case "/cadastro":
-                    apresentaFormCadastro(request, response);
+                    if (sessionRole.equals("admin")) {
+                        apresentaFormCadastro(request, response);
+                    } else {
+                        response.sendRedirect("/erro.jsp");
+                    }
                     break;
                 case "/insercao":
-                    insere(request, response);
+                    if (sessionRole.equals("admin")) {
+                        insere(request, response);
+                    } else {
+                        response.sendRedirect("/erro.jsp");
+                    }
                     break;
                 case "/edicao":
-                    apresentaFormEdicao(request, response);
+                    if (sessionRole.equals("admin")) {
+                        apresentaFormEdicao(request, response);
+                    } else {
+                        response.sendRedirect("/erro.jsp");
+                    }
                     break;
                 case "/lista":
                     lista(request, response);
                     break;
                 case "/atualizacao":
-                    atualize(request, response);
+                    if (sessionRole.equals("admin")) {
+                        atualize(request, response);
+                    } else {
+                        response.sendRedirect("/erro.jsp");
+                    }
                     break;
                 case "/remocao":
-                    remove(request, response);
+                    if (sessionRole.equals("admin")) {
+                        remove(request, response);
+                    } else {
+                        response.sendRedirect("/erro.jsp");
+                    }
                     break;
                 default:
                     lista(request, response);
