@@ -1,11 +1,15 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Erro de Permissão</title>
+        <title>Lokabike | Lista de Usuarios</title>
     </head>
     <body>
-        <h1 style="color: red;">Você não tem permissão para acessar este conteúdo!</h1>
-    </body>
+    <%@include  file="menu.jsp" %>
+    
+    <div class="content">
+        <h2 style="color: red;">Você não tem permissão para acessar este conteúdo!</h2>
+    </div>
+</body>
 </html>

@@ -98,6 +98,65 @@ public class LocacaoDAO {
         }
         return locacao;
     }
+    
+    public List<Locacao> getbyCliente(String email) {
+        List<Locacao> listaLocacaos = new ArrayList<>();
+        
+        String sql = "SELECT * FROM Locacao INNER JOIN Cliente ON locacao.CPF = Cliente.CPF WHERE Cliente.email = ?";
+        
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+
+                String ID = resultSet.getString("ID");
+                String CNPJ = resultSet.getString("CNPJ");
+                String CPF = resultSet.getString("CPF");
+                String rentDate = resultSet.getString("rentDate");
+
+                Locacao locacao = new Locacao(ID, CNPJ, CPF, rentDate);
+                listaLocacaos.add(locacao);
+            }
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaLocacaos;
+    }
+    
+    public List<Locacao> getbyLocadora(String email) {
+        List<Locacao> listaLocacaos = new ArrayList<>();
+        
+        String sql = "SELECT * FROM Locacao INNER JOIN Locadora ON locacao.CNPJ = Locadora.CNPJ WHERE Locadora.email = ?";
+        
+        try {
+            Connection conn = this.getConnection();
+            PreparedStatement statement = conn.prepareStatement(sql);
+            statement.setString(1, email);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+
+                String ID = resultSet.getString("ID");
+                String CNPJ = resultSet.getString("CNPJ");
+                String CPF = resultSet.getString("CPF");
+                String rentDate = resultSet.getString("rentDate");
+
+                Locacao locacao = new Locacao(ID, CNPJ, CPF, rentDate);
+                listaLocacaos.add(locacao);
+            }
+            resultSet.close();
+            statement.close();
+            conn.close();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return listaLocacaos;
+    }
+    
 
     public List<Locacao> getAll() {
         List<Locacao> listaLocacaos = new ArrayList<>();

@@ -31,27 +31,50 @@ public class LocacaoController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
+
+        String sessionRole = request.getSession().getAttribute("role").toString();
+
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/"));
         try {
             switch (action) {
                 case "/cadastro":
-                    apresentaFormCadastro(request, response);
+                    if (sessionRole.equals("admin") || sessionRole.equals("cliente")) {
+                        apresentaFormCadastro(request, response);
+                    } else {
+                        response.sendRedirect("/erro.jsp");
+                    }
                     break;
                 case "/insercao":
-                    insere(request, response);
+                    if (sessionRole.equals("admin") || sessionRole.equals("cliente")) {
+                        insere(request, response);
+                    } else {
+                        response.sendRedirect("/erro.jsp");
+                    }
                     break;
                 case "/edicao":
-                    apresentaFormEdicao(request, response);
+                    if (sessionRole.equals("admin") || sessionRole.equals("cliente")) {
+                        apresentaFormEdicao(request, response);
+                    } else {
+                        response.sendRedirect("/erro.jsp");
+                    }
                     break;
                 case "/lista":
                     lista(request, response);
                     break;
                 case "/atualizacao":
-                    atualize(request, response);
+                    if (sessionRole.equals("admin") || sessionRole.equals("cliente")) {
+                        atualize(request, response);
+                    } else {
+                        response.sendRedirect("/erro.jsp");
+                    }
                     break;
                 case "/remocao":
-                    remove(request, response);
+                    if (sessionRole.equals("admin") || sessionRole.equals("cliente")) {
+                        remove(request, response);
+                    } else {
+                        response.sendRedirect("/erro.jsp");
+                    }
                     break;
                 default:
                     lista(request, response);
@@ -67,7 +90,7 @@ public class LocacaoController extends HttpServlet {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/novaLocacao.jsp");
         dispatcher.forward(request, response);
     }
-    
+
     private void apresentaFormEdicao(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String ID = request.getParameter("ID");
@@ -76,18 +99,29 @@ public class LocacaoController extends HttpServlet {
         request.setAttribute("locacao", locacao);
         dispatcher.forward(request, response);
     }
-    
+
     private void lista(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        String sessionRole = request.getSession().getAttribute("role").toString();
+        String sessionEmail = request.getSession().getAttribute("email").toString();
+
         List<Locacao> listaLocacaos = dao.getAll();
+
+        if (sessionRole.equals("cliente")) {
+            listaLocacaos = dao.getbyCliente(sessionEmail);
+        }else if (sessionRole.equals("locadora")) {
+            listaLocacaos = dao.getbyLocadora(sessionEmail);
+        }
+
         request.setAttribute("listaLocacaos", listaLocacaos);
         RequestDispatcher dispatcher = request.getRequestDispatcher("/listaLocacao.jsp");
         dispatcher.forward(request, response);
     }
-    
+
     private void insere(HttpServletRequest request, HttpServletResponse response) throws IOException {
         request.setCharacterEncoding("UTF-8");
-        
+
         String CNPJ = request.getParameter("CNPJ");
         String CPF = request.getParameter("CPF");
         String rentDate = request.getParameter("rentDate");
@@ -96,11 +130,11 @@ public class LocacaoController extends HttpServlet {
         dao.insert(locacao);
         response.sendRedirect("lista");
     }
-    
+
     private void atualize(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
         request.setCharacterEncoding("UTF-8");
-        
+
         String ID = request.getParameter("ID");
         String CNPJ = request.getParameter("CNPJ");
         String CPF = request.getParameter("CPF");

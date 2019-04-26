@@ -36,54 +36,29 @@ public class LocadoraController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException {
         
-        String sessionRole = "";
         
-        if(request.getSession().equals(true)){
-            sessionRole = request.getSession().getAttribute("role").toString();
-        }
-        
-        
+    
         String uri = request.getRequestURI();
         String action = uri.substring(uri.lastIndexOf("/"));
         try {
             switch (action) {
                 case "/cadastro":
-                    if (sessionRole.equals("admin")) {
-                        apresentaFormCadastro(request, response);
-                    } else {
-                        response.sendRedirect("/erro.jsp");
-                    }
+                    apresentaFormCadastro(request, response);
                     break;
                 case "/insercao":
-                    if (sessionRole.equals("admin")) {
-                        insere(request, response);
-                    } else {
-                        response.sendRedirect("/erro.jsp");
-                    }
+                    insere(request, response);
                     break;
                 case "/edicao":
-                    if (sessionRole.equals("admin")) {
-                        apresentaFormEdicao(request, response);
-                    } else {
-                        response.sendRedirect("/erro.jsp");
-                    }
+                    apresentaFormEdicao(request, response);
                     break;
                 case "/lista":
                     lista(request, response);
                     break;
                 case "/atualizacao":
-                    if (sessionRole.equals("admin")) {
-                        atualize(request, response);
-                    } else {
-                        response.sendRedirect("/erro.jsp");
-                    }
+                    atualize(request, response);
                     break;
                 case "/remocao":
-                    if (sessionRole.equals("admin")) {
-                        remove(request, response);
-                    } else {
-                        response.sendRedirect("/erro.jsp");
-                    }
+                    remove(request, response);
                     break;
                 default:
                     lista(request, response);
@@ -96,7 +71,15 @@ public class LocadoraController extends HttpServlet {
 
     private void apresentaFormCadastro(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/novaLocadora.jsp");
+        
+        String sessionRole = sessionRole = request.getSession().getAttribute("role").toString();
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/erro.jsp");
+        
+        if (sessionRole.equals("admin")) {
+            dispatcher = request.getRequestDispatcher("/novaLocadora.jsp");
+        }
+        
         dispatcher.forward(request, response);
     }
 
@@ -128,8 +111,9 @@ public class LocadoraController extends HttpServlet {
 
         Locadora locadora = new Locadora(email, password, CNPJ, name, city);
         Usuario usuario = new Usuario(email, password, role);
-        dao.insert(locadora);
         userDao.insert(usuario);
+        dao.insert(locadora);
+        
         response.sendRedirect("lista");
     }
 

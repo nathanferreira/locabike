@@ -20,11 +20,11 @@
     .logado{
         color:#fff;
         position:absolute;
-        top: 10px;
+        top: 5px;
         right:15px;
     }
     #menu{
-        width: 200px;
+        width: 250px;
         height: 100%;
         background-color: #ccc;
         margin-right:30px;
@@ -73,7 +73,8 @@
             if ((session.getAttribute("role") == null) || (session.getAttribute("role") == "")) {
                 out.print("Você não está logado");
             } else {
-                out.print("Logado como: " + session.getAttribute("role"));
+                out.print("Email: " + session.getAttribute("email")+"<br>");
+                out.print("Papel: " + session.getAttribute("role"));
                 role = session.getAttribute("role").toString();
             }
         %>
@@ -85,11 +86,11 @@
         <li><a href="/locadora/lista">Lista de Locadoras</a></li>
 
         <% if (role.equals("admin")) { %>
-        <li><a href="/cliente/cadastro">Adicione Novo Cliente</a></li>   
         <li><a href="/locadora/cadastro">Adicione Nova Locadora</a></li>
-        <li><a href="/admin/cadastro">Adicione novo Usuario</a></li>
-        <li><a href="/admin/lista">Lista de Usuarios</a></li>
         <li><a href="/cliente/lista">Lista de Clientes</a></li>
+        <li><a href="/cliente/cadastro">Adicione Novo Cliente</a></li>   
+        <li><a href="/admin/lista">Lista de Usuarios</a></li>
+        <li><a href="/admin/cadastro">Adicione novo Usuario</a></li>
         <li><a href="/locacao/lista">Lista de Locacoes</a></li>
         <li><a href="/locacao/cadastro">Adicione nova Locacao</a></li>
             <% } else if (role.equals("cliente")) { %>

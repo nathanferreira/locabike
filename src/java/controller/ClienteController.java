@@ -103,8 +103,9 @@ public class ClienteController extends HttpServlet {
 
         Cliente cliente = new Cliente(email, password, CPF, name, gender, phone, birthDate);
         Usuario usuario = new Usuario(email, password, role);
-        dao.insert(cliente);
         userDao.insert(usuario);
+        dao.insert(cliente);
+        
         response.sendRedirect("lista");
     }
 

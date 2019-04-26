@@ -19,7 +19,7 @@
             session.setAttribute("email", email);
             session.setAttribute("role", resultSet.getString("ROLE"));
 
-            response.sendRedirect("/listaLocadora.jsp");
+            response.sendRedirect("/locadora/lista");
         } else {
             out.println("Senha invalida <a href='index.jsp'>Tente novamente</a>");
         }
